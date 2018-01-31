@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Card, Header } from "semantic-ui-react";
+
+import PartyGuestsForm from "./party-guests-form";
 import "./party.css";
 
 class Party extends Component {
@@ -14,7 +16,7 @@ class Party extends Component {
 		return (
 			<Modal
 				trigger={
-					<Card fluid href="javascript:void(0)">
+					<Card fluid href="#">
 						<Card.Content>
 							<Card.Header>{party.party_name}</Card.Header>
 							{guests}
@@ -29,6 +31,7 @@ class Party extends Component {
 							const fullName = `${guest.first_name} ${guest.last_name}`;
 							return <p key={fullName}>{fullName}</p>;
 						})}
+						<PartyGuestsForm />
 					</Modal.Description>
 				</Modal.Content>
 			</Modal>

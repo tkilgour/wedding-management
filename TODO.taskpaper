@@ -1,6 +1,9 @@
 	- responsive card grid @done(18-01-30 23:08)
 		- nest [fluid cards](https://react.semantic-ui.com/views/card#card-example-fluid) within a responsive grid @done(18-01-30 23:08)
 	- Complete CRUD implementation @started
+		- create new guest from inside form component
+	- rethink component structure from a macro level (form inside party inside list?)
+	- fix modal scrolling to top @bug
 	- implement priority
 	- implement belongsTo
 	- filters

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Party from "./party";
-import { Container, Header, Grid, Card } from "semantic-ui-react";
+import { Grid, Card } from "semantic-ui-react";
 
 class PartyList extends Component {
 	render() {
@@ -8,19 +8,16 @@ class PartyList extends Component {
 
 		let partyCards = data.map(party => {
 			return (
-				<Grid.Column mobile={16} tablet={8} computer={4} key={party["_id"]}>
+				<Grid.Column mobile={16} tablet={8} computer={4} key={party._id}>
 					<Party>{party}</Party>
 				</Grid.Column>
 			);
 		});
 
 		return (
-			<Container style={{ marginTop: "3em" }}>
-				<Header as="h1">Guestlist</Header>
-				<Card.Group itemsPerRow={4}>
-					<Grid>{partyCards}</Grid>
-				</Card.Group>
-			</Container>
+			<Card.Group>
+				<Grid container>{partyCards}</Grid>
+			</Card.Group>
 		);
 	}
 }

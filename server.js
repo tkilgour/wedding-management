@@ -67,6 +67,10 @@ router
 		// bodyParser lets us use req.body
 		party.party_name = req.body.party_name;
 		party.guests = req.body.guests; // array of objects
+		party.partyBelongsTo = req.body.partyBelongsTo;
+		party.isFamily = req.body.isFamily;
+		party.priority = req.body.priority;
+		party._id = req.body._id;
 
 		party.save(function(err) {
 			if (err) res.send(err);
@@ -82,6 +86,9 @@ router
 				if (err) res.send(err);
 				req.body.party_name ? (party.party_name = req.body.party_name) : null;
 				req.body.guests ? (party.guests = req.body.guests) : null;
+				req.body.partyBelongsTo ? (party.partyBelongsTo = req.body.partyBelongsTo) : null;
+				req.body.isFamily ? (party.isFamily = req.body.isFamily) : null;
+				req.body.priority ? (party.priority = req.body.priority) : null;
 
 				party.save(function(err) {
 					if (err) res.send(err);
