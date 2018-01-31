@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Modal, Card, Header } from "semantic-ui-react";
+import "./party.css";
 
 class Party extends Component {
 	render() {
@@ -6,14 +8,30 @@ class Party extends Component {
 
 		let guests = party.guests.map(guest => {
 			const fullName = `${guest.first_name} ${guest.last_name}`;
-			return <p key={fullName}>{fullName}</p>
-		})
+			return <Card.Meta key={fullName}>{fullName}</Card.Meta>;
+		});
 
 		return (
-			<div>
-				<h2>{party.party_name}</h2>
-				{guests}
-			</div>
+			<Modal
+				trigger={
+					<Card fluid href="javascript:void(0)">
+						<Card.Content>
+							<Card.Header>{party.party_name}</Card.Header>
+							{guests}
+						</Card.Content>
+					</Card>
+				}
+			>
+				<Modal.Content>
+					<Modal.Description>
+						<Header as="h2">{party.party_name}</Header>
+						{party.guests.map(guest => {
+							const fullName = `${guest.first_name} ${guest.last_name}`;
+							return <p key={fullName}>{fullName}</p>;
+						})}
+					</Modal.Description>
+				</Modal.Content>
+			</Modal>
 		);
 	}
 }

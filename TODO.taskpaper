@@ -1,5 +1,8 @@
-	- responsive card grid
-		- nest [fluid cards](https://react.semantic-ui.com/views/card#card-example-fluid) within a responsive grid
+	- responsive card grid @done(18-01-30 23:08)
+		- nest [fluid cards](https://react.semantic-ui.com/views/card#card-example-fluid) within a responsive grid @done(18-01-30 23:08)
+	- Complete CRUD implementation @started
+	- implement priority
+	- implement belongsTo
+	- filters
 	- [draggable cards](https://www.npmjs.com/package/react-draggable-list)
-	- Complete CRUD implementation
 	- deploy

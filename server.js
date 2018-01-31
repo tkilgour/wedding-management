@@ -18,7 +18,6 @@ var port = process.env.API_PORT || 3001;
 var user = process.env.DB_USER;
 var pass = process.env.DB_PASS;
 
-
 //db config
 mongoose.connect(
 	`mongodb://${user}:${pass}@ds117888.mlab.com:17888/wedding-management`
@@ -41,7 +40,7 @@ app.use(function(req, res, next) {
 		"Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
 	);
 
-	//and remove cacheing so we get the most recent comments
+	//and remove cacheing so we get the most recent parties
 	res.setHeader("Cache-Control", "no-cache");
 	next();
 });
@@ -55,47 +54,48 @@ router
 	.route("/parties")
 	// retrieve all parties from db
 	.get(function(req, res) {
-		// looks at Comment schema
+		// looks at Party schema
 		Party.find(function(err, parties) {
 			if (err) res.send(err);
 			res.json(parties);
 		});
 	})
 
-// 	// post new comment to db
-// 	.post(function(req, res) {
-// 		var comment = new Comment();
-// 		// bodyParser lets us use req.body
-// 		comment.author = req.body.author;
-// 		comment.text = req.body.text;
+	// post new party to db
+	.post(function(req, res) {
+		var party = new Party();
+		// bodyParser lets us use req.body
+		party.party_name = req.body.party_name;
+		party.guests = req.body.guests; // array of objects
 
-// 		comment.save(function(err) {
-// 			if (err) res.send(err);
-// 			res.json({ message: "Comment successfully added!" });
-// 		});
-// 	});
+		party.save(function(err) {
+			if (err) res.send(err);
+			res.json({ message: "Party successfully added!" });
+		});
+	});
 
-// router
-// 	.route("/comments/:comment_id")
-// 	.put(function(req, res) {
-// 		Comment.findById(req.params.comment_id, function(err, comment) {
-// 			if (err) res.send(err);
-// 			req.body.author ? (comment.author = req.body.author) : null;
-// 			req.body.text ? (comment.text = req.body.text) : null;
+router
+	.route("/parties/:party_id")
 
-// 			comment.save(function(err) {
-// 				if (err) res.send(err);
-// 				res.json({ message: "Comment has been updated" });
-// 			});
-// 		});
-// 	})
+		.put(function(req, res) {
+			Party.findById(req.params.party_id, function(err, party) {
+				if (err) res.send(err);
+				req.body.party_name ? (party.party_name = req.body.party_name) : null;
+				req.body.guests ? (party.guests = req.body.guests) : null;
 
-// 	.delete(function(req, res) {
-// 		Comment.remove({ _id: req.params.comment_id }, function(err, comment) {
-// 			if (err) res.send(err);
-// 			res.json({ message: "Comment has been deleted" });
-// 		});
-// 	});
+				party.save(function(err) {
+					if (err) res.send(err);
+					res.json({ message: "Party has been updated" });
+				});
+			});
+		})
+
+	.delete(function(req, res) {
+		Party.remove({ _id: req.params.party_id }, function(err, party) {
+			if (err) res.send(err);
+			res.json({ message: "Party has been deleted" });
+		});
+	});
 
 //Use our router configuration when we call /api
 app.use("/api", router);
