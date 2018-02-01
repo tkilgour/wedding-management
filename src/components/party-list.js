@@ -9,7 +9,13 @@ class PartyList extends Component {
 		let partyCards = data.map(party => {
 			return (
 				<Grid.Column mobile={16} tablet={8} computer={4} key={party._id}>
-					<Party>{party}</Party>
+					<Party
+						uniqueID={party._id}
+						onPartyDelete={this.props.onPartyDelete}
+						data={data}
+					>
+						{party}
+					</Party>
 				</Grid.Column>
 			);
 		});

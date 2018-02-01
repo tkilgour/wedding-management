@@ -57,6 +57,9 @@ router
 		// looks at Party schema
 		Party.find(function(err, parties) {
 			if (err) res.send(err);
+			parties = parties.filter(party => {
+				return !party.deleted;
+			});
 			res.json(parties);
 		});
 	})
@@ -70,6 +73,7 @@ router
 		party.partyBelongsTo = req.body.partyBelongsTo;
 		party.isFamily = req.body.isFamily;
 		party.priority = req.body.priority;
+		console.log(req.body._id);
 		party._id = req.body._id;
 
 		party.save(function(err) {
@@ -81,26 +85,33 @@ router
 router
 	.route("/parties/:party_id")
 
-		.put(function(req, res) {
-			Party.findById(req.params.party_id, function(err, party) {
-				if (err) res.send(err);
-				req.body.party_name ? (party.party_name = req.body.party_name) : null;
-				req.body.guests ? (party.guests = req.body.guests) : null;
-				req.body.partyBelongsTo ? (party.partyBelongsTo = req.body.partyBelongsTo) : null;
-				req.body.isFamily ? (party.isFamily = req.body.isFamily) : null;
-				req.body.priority ? (party.priority = req.body.priority) : null;
+	.put(function(req, res) {
+		Party.findById(req.params.party_id, function(err, party) {
+			if (err) res.send(err);
+			req.body.party_name ? (party.party_name = req.body.party_name) : null;
+			req.body.guests ? (party.guests = req.body.guests) : null;
+			req.body.partyBelongsTo
+				? (party.partyBelongsTo = req.body.partyBelongsTo)
+				: null;
+			req.body.isFamily ? (party.isFamily = req.body.isFamily) : null;
+			req.body.priority ? (party.priority = req.body.priority) : null;
 
-				party.save(function(err) {
-					if (err) res.send(err);
-					res.json({ message: "Party has been updated" });
-				});
+			party.save(function(err) {
+				if (err) res.send(err);
+				res.json({ message: "Party has been updated" });
 			});
-		})
+		});
+	})
 
 	.delete(function(req, res) {
-		Party.remove({ _id: req.params.party_id }, function(err, party) {
+		Party.findById(req.params.party_id, function(err, party) {
 			if (err) res.send(err);
-			res.json({ message: "Party has been deleted" });
+
+			party.deleted = true;
+			party.save(function(err) {
+				if (err) res.send(err);
+				res.json({ message: `Party has been deleted` });
+			});
 		});
 	});
 

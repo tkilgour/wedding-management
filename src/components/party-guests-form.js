@@ -5,18 +5,18 @@ class PartyGuestsForm extends Component {
 	render() {
 		return (
 			<Form>
-				<Header as="h3">New Guest</Header>
-				<Form.Group widths='equal'>
+				<Header as="h3" style={{ paddingTop: "2em" }}>Add New Guest</Header>
+				<Form.Group widths="equal">
 					<Form.Field>
-						<label>First Name</label>
-						<input placeholder="First Name" />
+						<label htmlFor="firstName" className="offscreen">First Name</label>
+						<input name="firstName" id="firstName" placeholder="First Name" />
 					</Form.Field>
 					<Form.Field>
-						<label>Last Name</label>
-						<input placeholder="Last Name" />
+						<label htmlFor="lastName" className="offscreen">Last Name</label>
+						<input name="lastName" id="lastName" placeholder="Last Name" />
 					</Form.Field>
+					<Form.Button type="submit">Submit</Form.Button>
 				</Form.Group>
-				<Form.Button type="submit">Submit</Form.Button>
 			</Form>
 		);
 	}

@@ -27,7 +27,7 @@ class PartyForm extends Component {
 		return (
 			<Form onSubmit={this.handleSubmit}>
 				<Form.Group>
-					<Form.Input placeholder="Name of party" onChange={this.handlePartyNameChange} />
+					<Form.Input placeholder="Name of party" value={this.state.party_name} onChange={this.handlePartyNameChange} />
 					<Form.Button content="Submit" />
 				</Form.Group>
 			</Form>

@@ -4,6 +4,7 @@ import { Header, Grid } from "semantic-ui-react";
 
 import PartyForm from "./components/party-form";
 import PartyList from "./components/party-list";
+import "./App.css";
 
 const URI = "http://localhost:3001/api/";
 
@@ -14,6 +15,7 @@ class App extends Component {
 
     this.loadPartiesFromServer = this.loadPartiesFromServer.bind(this);
     this.handlePartySubmit = this.handlePartySubmit.bind(this);
+    this.handlePartyDelete = this.handlePartyDelete.bind(this);
   }
 
   loadPartiesFromServer() {
@@ -29,9 +31,8 @@ class App extends Component {
 
   handlePartySubmit(party) {
     let parties = this.state.data;
-    party._id = Date.now()
+    party._id = Date.now().toString();
     let newParties = parties.concat([party]);
-
 
     this.setState({ data: newParties });
 
@@ -39,6 +40,24 @@ class App extends Component {
       console.error(err);
       this.setState({ data: parties });
     });
+  }
+
+  handlePartyDelete(id) {
+    let parties = this.state.data;
+
+    let newParties = parties.filter(party => {
+      return party._id !== id;
+    });
+
+    this.setState({ data: newParties });
+
+    axios
+      .delete(`${URI}/parties/${id}`)
+      .then(res => console.log("Party deleted"))
+      .catch(err => {
+        console.error(err);
+        this.setState({ data: parties });
+      });
   }
 
   componentDidMount() {
@@ -57,7 +76,10 @@ class App extends Component {
           </Grid.Column>
         </Grid>
 
-        <PartyList data={this.state.data} />
+        <PartyList
+          data={this.state.data}
+          onPartyDelete={this.handlePartyDelete}
+        />
       </div>
     );
   }

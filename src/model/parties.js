@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 //create new instance of the mongoose.schema. the schema takes an
 //object that shows the shape of your database entries.
 var PartiesSchema = new Schema({
-	_id: Date,
+	_id: String,
 	party_name: {
 		type: String,
 		required: true
@@ -14,6 +14,7 @@ var PartiesSchema = new Schema({
 	partyBelongsTo: String, // accept "Anna", "Thomas", or null
 	isFamily: Boolean,
 	priority: Number,
+	deleted: Boolean,
 	guests: [
 		{
 			first_name: String,
